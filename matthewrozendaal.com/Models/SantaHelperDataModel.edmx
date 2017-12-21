@@ -1,0 +1,464 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="KidsListDatabaseModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="lastLoginDate" Type="timestamp" Precision="0" />
+        </EntityType>
+        <EntityType Name="People">
+          <Key>
+            <PropertyRef Name="PeopleID" />
+          </Key>
+          <Property Name="PeopleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="firstname" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="lastname" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="parent_ID" Type="int" Nullable="false" />
+          <Property Name="profile_ID" Type="int" />
+          <Property Name="points" Type="int" />
+          <Property Name="max_gift" Type="int" />
+          <Property Name="min_gift" Type="int" />
+          <Property Name="goal_endDate" Type="date" />
+        </EntityType>
+        <EntityType Name="Point_Changes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Kid_Id" Type="int" Nullable="false" />
+          <Property Name="Point_Id" Type="int" Nullable="false" />
+          <Property Name="Change_Date" Type="date" Nullable="false" />
+          <Property Name="InfringmentChange" Type="int" />
+          <Property Name="IncrementExpo" Type="bool" />
+          <Property Name="Note" Type="varchar" MaxLength="180" />
+        </EntityType>
+        <EntityType Name="Points">
+          <Key>
+            <PropertyRef Name="point_ID" />
+          </Key>
+          <Property Name="point_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="60" />
+          <Property Name="value_start" Type="int" />
+        </EntityType>
+        <EntityType Name="Profile_Pic">
+          <Key>
+            <PropertyRef Name="picture_id" />
+          </Key>
+          <Property Name="picture_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="picture" Type="blob" />
+          <Property Name="picture_alt" Type="varchar" MaxLength="25" />
+          <Property Name="picture_name" Type="varchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <Association Name="People_ibfk_1">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="People" Type="Self.People" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="People">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="People_ibfk_2">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="People" Type="Self.People" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="People">
+              <PropertyRef Name="parent_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="People_ibfk_3">
+          <End Role="Profile_Pic" Type="Self.Profile_Pic" Multiplicity="0..1" />
+          <End Role="People" Type="Self.People" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profile_Pic">
+              <PropertyRef Name="picture_id" />
+            </Principal>
+            <Dependent Role="People">
+              <PropertyRef Name="profile_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Point_Changes_ibfk_1">
+          <End Role="Points" Type="Self.Points" Multiplicity="1" />
+          <End Role="Point_Changes" Type="Self.Point_Changes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Points">
+              <PropertyRef Name="point_ID" />
+            </Principal>
+            <Dependent Role="Point_Changes">
+              <PropertyRef Name="Point_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Point_Changes_ibfk_2">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Point_Changes" Type="Self.Point_Changes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Point_Changes">
+              <PropertyRef Name="Kid_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="CreateNewUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="matthewr_KidsListDatabase">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="passwords" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetUserID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="matthewr_KidsListDatabase">
+          <Parameter Name="p_username" Type="varchar" Mode="In" />
+          <Parameter Name="p_pass" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateGifts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="matthewr_KidsListDatabase">
+          <Parameter Name="p_UserID" Type="int" Mode="In" />
+          <Parameter Name="p_Max_gift" Type="int" Mode="In" />
+          <Parameter Name="p_Min_gift" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateParentID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="matthewr_KidsListDatabase">
+          <Parameter Name="p_UserId" Type="int" Mode="In" />
+          <Parameter Name="p_parent_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdatePeopleName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="matthewr_KidsListDatabase">
+          <Parameter Name="p_UserId" Type="int" Mode="In" />
+          <Parameter Name="p_firstname" Type="varchar" Mode="In" />
+          <Parameter Name="p_lastname" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UpdatePoints" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="matthewr_KidsListDatabase">
+          <Parameter Name="p_UserID" Type="int" Mode="In" />
+          <Parameter Name="p_PointChange" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="matthewr_KidsListDatabase">
+          <Parameter Name="p_userID" Type="int" Mode="In" />
+          <Parameter Name="p_firstname" Type="varchar" Mode="In" />
+          <Parameter Name="p_lastname" Type="varchar" Mode="In" />
+          <Parameter Name="p_parent_ID" Type="int" Mode="In" />
+          <Parameter Name="p_profile_ID" Type="int" Mode="In" />
+          <Parameter Name="p_max_gift" Type="int" Mode="In" />
+          <Parameter Name="p_min_gift" Type="int" Mode="In" />
+          <Parameter Name="p_goal_endDate" Type="date" Mode="In" />
+        </Function>
+        <EntityContainer Name="KidsListDatabaseModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="matthewr_KidsListDatabase" store:Type="Tables" />
+          <EntitySet Name="People" EntityType="Self.People" Schema="matthewr_KidsListDatabase" store:Type="Tables" />
+          <EntitySet Name="Point_Changes" EntityType="Self.Point_Changes" Schema="matthewr_KidsListDatabase" store:Type="Tables" />
+          <EntitySet Name="Points" EntityType="Self.Points" Schema="matthewr_KidsListDatabase" store:Type="Tables" />
+          <EntitySet Name="Profile_Pic" EntityType="Self.Profile_Pic" Schema="matthewr_KidsListDatabase" store:Type="Tables" />
+          <AssociationSet Name="People_ibfk_1" Association="Self.People_ibfk_1">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="People" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="People_ibfk_2" Association="Self.People_ibfk_2">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="People" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="People_ibfk_3" Association="Self.People_ibfk_3">
+            <End Role="Profile_Pic" EntitySet="Profile_Pic" />
+            <End Role="People" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="Point_Changes_ibfk_1" Association="Self.Point_Changes_ibfk_1">
+            <End Role="Points" EntitySet="Points" />
+            <End Role="Point_Changes" EntitySet="Point_Changes" />
+          </AssociationSet>
+          <AssociationSet Name="Point_Changes_ibfk_2" Association="Self.Point_Changes_ibfk_2">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Point_Changes" EntitySet="Point_Changes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KidsListDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lastLoginDate" Type="DateTime" />
+          <NavigationProperty Name="People" Relationship="Self.People_ibfk_1" FromRole="Account" ToRole="People" />
+          <NavigationProperty Name="People1" Relationship="Self.People_ibfk_2" FromRole="Account" ToRole="People" />
+          <NavigationProperty Name="Point_Changes" Relationship="Self.Point_Changes_ibfk_2" FromRole="Account" ToRole="Point_Changes" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="PeopleID" />
+          </Key>
+          <Property Name="PeopleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="firstname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lastname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="parent_ID" Type="Int32" Nullable="false" />
+          <Property Name="profile_ID" Type="Int32" />
+          <Property Name="points" Type="Int32" />
+          <Property Name="max_gift" Type="Int32" />
+          <Property Name="min_gift" Type="Int32" />
+          <Property Name="goal_endDate" Type="DateTime" />
+          <NavigationProperty Name="Account" Relationship="Self.People_ibfk_1" FromRole="People" ToRole="Account" />
+          <NavigationProperty Name="Account1" Relationship="Self.People_ibfk_2" FromRole="People" ToRole="Account" />
+          <NavigationProperty Name="Profile_Pic" Relationship="Self.People_ibfk_3" FromRole="People" ToRole="Profile_Pic" />
+        </EntityType>
+        <EntityType Name="Point_Changes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Kid_Id" Type="Int32" Nullable="false" />
+          <Property Name="Point_Id" Type="Int32" Nullable="false" />
+          <Property Name="Change_Date" Type="DateTime" Nullable="false" />
+          <Property Name="InfringmentChange" Type="Int32" />
+          <Property Name="IncrementExpo" Type="Boolean" />
+          <Property Name="Note" Type="String" MaxLength="180" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Account" Relationship="Self.Point_Changes_ibfk_2" FromRole="Point_Changes" ToRole="Account" />
+          <NavigationProperty Name="Point" Relationship="Self.Point_Changes_ibfk_1" FromRole="Point_Changes" ToRole="Points" />
+        </EntityType>
+        <EntityType Name="Point">
+          <Key>
+            <PropertyRef Name="point_ID" />
+          </Key>
+          <Property Name="point_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="value_start" Type="Int32" />
+          <NavigationProperty Name="Point_Changes" Relationship="Self.Point_Changes_ibfk_1" FromRole="Points" ToRole="Point_Changes" />
+        </EntityType>
+        <EntityType Name="Profile_Pic">
+          <Key>
+            <PropertyRef Name="picture_id" />
+          </Key>
+          <Property Name="picture_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="picture_alt" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="picture_name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="People" Relationship="Self.People_ibfk_3" FromRole="Profile_Pic" ToRole="People" />
+        </EntityType>
+        <Association Name="People_ibfk_1">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="People" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="People">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="People_ibfk_2">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="People" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="People">
+              <PropertyRef Name="parent_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Point_Changes_ibfk_2">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Point_Changes" Type="Self.Point_Changes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Point_Changes">
+              <PropertyRef Name="Kid_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="People_ibfk_3">
+          <End Role="Profile_Pic" Type="Self.Profile_Pic" Multiplicity="0..1" />
+          <End Role="People" Type="Self.Person" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profile_Pic">
+              <PropertyRef Name="picture_id" />
+            </Principal>
+            <Dependent Role="People">
+              <PropertyRef Name="profile_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Point_Changes_ibfk_1">
+          <End Role="Points" Type="Self.Point" Multiplicity="1" />
+          <End Role="Point_Changes" Type="Self.Point_Changes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Points">
+              <PropertyRef Name="point_ID" />
+            </Principal>
+            <Dependent Role="Point_Changes">
+              <PropertyRef Name="Point_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="KidsListDatabaseEntity" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="People" EntityType="Self.Person" />
+          <EntitySet Name="Point_Changes" EntityType="Self.Point_Changes" />
+          <EntitySet Name="Points" EntityType="Self.Point" />
+          <EntitySet Name="Profile_Pic" EntityType="Self.Profile_Pic" />
+          <AssociationSet Name="People_ibfk_1" Association="Self.People_ibfk_1">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="People" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="People_ibfk_2" Association="Self.People_ibfk_2">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="People" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="Point_Changes_ibfk_2" Association="Self.Point_Changes_ibfk_2">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Point_Changes" EntitySet="Point_Changes" />
+          </AssociationSet>
+          <AssociationSet Name="People_ibfk_3" Association="Self.People_ibfk_3">
+            <End Role="Profile_Pic" EntitySet="Profile_Pic" />
+            <End Role="People" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="Point_Changes_ibfk_1" Association="Self.Point_Changes_ibfk_1">
+            <End Role="Points" EntitySet="Points" />
+            <End Role="Point_Changes" EntitySet="Point_Changes" />
+          </AssociationSet>
+          <FunctionImport Name="CreateNewUser">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="passwords" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateGifts">
+            <Parameter Name="p_UserID" Mode="In" Type="Int32" />
+            <Parameter Name="p_Max_gift" Mode="In" Type="Int32" />
+            <Parameter Name="p_Min_gift" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateParentID">
+            <Parameter Name="p_UserId" Mode="In" Type="Int32" />
+            <Parameter Name="p_parent_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdatePeopleName">
+            <Parameter Name="p_UserId" Mode="In" Type="Int32" />
+            <Parameter Name="p_firstname" Mode="In" Type="String" />
+            <Parameter Name="p_lastname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdatePoints">
+            <Parameter Name="p_UserID" Mode="In" Type="Int32" />
+            <Parameter Name="p_PointChange" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateUser">
+            <Parameter Name="p_userID" Mode="In" Type="Int32" />
+            <Parameter Name="p_firstname" Mode="In" Type="String" />
+            <Parameter Name="p_lastname" Mode="In" Type="String" />
+            <Parameter Name="p_parent_ID" Mode="In" Type="Int32" />
+            <Parameter Name="p_profile_ID" Mode="In" Type="Int32" />
+            <Parameter Name="p_max_gift" Mode="In" Type="Int32" />
+            <Parameter Name="p_min_gift" Mode="In" Type="Int32" />
+            <Parameter Name="p_goal_endDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="KidsListDatabaseModelStoreContainer" CdmEntityContainer="KidsListDatabaseEntity">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="KidsListDatabaseModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="lastLoginDate" ColumnName="lastLoginDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="KidsListDatabaseModel.Person">
+              <MappingFragment StoreEntitySet="People">
+                <ScalarProperty Name="PeopleID" ColumnName="PeopleID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="parent_ID" ColumnName="parent_ID" />
+                <ScalarProperty Name="profile_ID" ColumnName="profile_ID" />
+                <ScalarProperty Name="points" ColumnName="points" />
+                <ScalarProperty Name="max_gift" ColumnName="max_gift" />
+                <ScalarProperty Name="min_gift" ColumnName="min_gift" />
+                <ScalarProperty Name="goal_endDate" ColumnName="goal_endDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Point_Changes">
+            <EntityTypeMapping TypeName="KidsListDatabaseModel.Point_Changes">
+              <MappingFragment StoreEntitySet="Point_Changes">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Kid_Id" ColumnName="Kid_Id" />
+                <ScalarProperty Name="Point_Id" ColumnName="Point_Id" />
+                <ScalarProperty Name="Change_Date" ColumnName="Change_Date" />
+                <ScalarProperty Name="InfringmentChange" ColumnName="InfringmentChange" />
+                <ScalarProperty Name="IncrementExpo" ColumnName="IncrementExpo" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Points">
+            <EntityTypeMapping TypeName="KidsListDatabaseModel.Point">
+              <MappingFragment StoreEntitySet="Points">
+                <ScalarProperty Name="point_ID" ColumnName="point_ID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="value_start" ColumnName="value_start" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Profile_Pic">
+            <EntityTypeMapping TypeName="KidsListDatabaseModel.Profile_Pic">
+              <MappingFragment StoreEntitySet="Profile_Pic">
+                <ScalarProperty Name="picture_id" ColumnName="picture_id" />
+                <ScalarProperty Name="picture" ColumnName="picture" />
+                <ScalarProperty Name="picture_alt" ColumnName="picture_alt" />
+                <ScalarProperty Name="picture_name" ColumnName="picture_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="CreateNewUser" FunctionName="KidsListDatabaseModel.Store.CreateNewUser" />
+          <FunctionImportMapping FunctionImportName="UpdateGifts" FunctionName="KidsListDatabaseModel.Store.UpdateGifts" />
+          <FunctionImportMapping FunctionImportName="UpdateParentID" FunctionName="KidsListDatabaseModel.Store.UpdateParentID" />
+          <FunctionImportMapping FunctionImportName="UpdatePeopleName" FunctionName="KidsListDatabaseModel.Store.UpdatePeopleName" />
+          <FunctionImportMapping FunctionImportName="UpdatePoints" FunctionName="KidsListDatabaseModel.Store.UpdatePoints" />
+          <FunctionImportMapping FunctionImportName="UpdateUser" FunctionName="KidsListDatabaseModel.Store.UpdateUser" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

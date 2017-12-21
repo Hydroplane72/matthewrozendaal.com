@@ -1,0 +1,21 @@
+*{
+	margin: 0px;
+	padding-top: 0px;
+}
+h1 {
+	text-align:center;
+	color: navy;
+	background-color: #C6D2F6;
+	padding: .5em;
+	border: dotted blue .1em;
+}
+h4, h2 {
+	color: navy;
+}
+a:hover {
+	background-color: black;
+	color: white;
+}
+a:visited {
+	color: purple;
+}

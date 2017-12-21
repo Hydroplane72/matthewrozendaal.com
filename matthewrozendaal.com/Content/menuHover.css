@@ -1,0 +1,11 @@
+.navbar-default .navbar-nav > li.dropdown:hover > a, 
+.navbar-default .navbar-nav > li.dropdown:hover > a:hover,
+.navbar-default .navbar-nav > li.dropdown:hover > a:focus {
+    background-color: black;
+    color: white;
+}
+li.dropdown:hover > .dropdown-menu {
+    display: block;
+	background-color:gray;
+	color: white;
+}

@@ -1,0 +1,12 @@
+html {
+	background-image: url("../images/background.jpg");
+}
+body { 
+	margin-right: 3em;
+	margin-left:3em;
+	margin-bottom: 3em;
+	border-style:inset;
+	border-color: #50bedf;
+	border-width: .5em;
+	border-top-width:0em;
+}
