@@ -236,6 +236,7 @@
     <Content Include="Areas\KidsList\Models\KidsListDataModel.edmx.diagram">
       <DependentUpon>KidsListDataModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\KidsList\Views\Account\SantaLogin.cshtml" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -275,7 +276,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\KidsList\Views\Account\" />
     <Folder Include="Areas\KidsList\Views\Kid\" />
     <Folder Include="Areas\KidsList\Views\Parent\" />
     <Folder Include="Areas\KidsList\Views\Point\" />

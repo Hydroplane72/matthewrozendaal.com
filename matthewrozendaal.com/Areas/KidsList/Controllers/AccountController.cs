@@ -16,7 +16,7 @@ namespace matthewrozendaal.com.Controllers.Santa_Helper
         [HttpGet]
         public ActionResult SantaLogin()
         {
-           // return RedirectToRoute("~/KidsList/Account/SantaLogin");
+           
             return View("~/Areas/KidsList/Views/Account/SantaLogin.cshtml");
         }
         /// <summary>
