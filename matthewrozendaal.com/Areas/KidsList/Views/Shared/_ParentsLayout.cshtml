@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <!-- content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <!--Parent and Kid have seperate home screens-->
+                    <li>@Html.ActionLink("Home", "Home", "Parent")</li>
+                    <li>@Html.ActionLink("Add Point Changers", "AddPointChanger", "Point")</li>
+                    <li>@Html.ActionLink("Log out", "LogOut", "Account")</li>
+                    <li>@Html.ActionLink("Add Child", "AddChild", "Parent")</li>
+                    <li>@Html.ActionLink("Go back to Matthew's Home page", "Index", "Home")</li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>

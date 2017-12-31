@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title</title>
 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -35,6 +35,8 @@
                         </ul>
                     </li>
                     <li><a href="other/resume.html">Resume</a></li>
+                    <li>@Html.ActionLink("Santa Helper", "SantaLogin", "Account")</li>
+                    <li>@Html.ActionLink("Kids Demo", "SantaLogin", "Account", new { area = "KidsList" }, null)</li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->

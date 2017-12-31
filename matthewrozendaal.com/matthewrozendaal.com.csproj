@@ -49,8 +49,11 @@
     <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.4.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
@@ -85,7 +88,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
@@ -150,46 +152,58 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\KidsList\Controllers\AccountController.cs" />
+    <Compile Include="Areas\KidsList\Controllers\KidController.cs" />
+    <Compile Include="Areas\KidsList\Controllers\ParentController.cs" />
+    <Compile Include="Areas\KidsList\Controllers\PointController.cs" />
+    <Compile Include="Areas\KidsList\KidsListAreaRegistration.cs" />
+    <Compile Include="Areas\KidsList\Models\Account.cs">
+      <DependentUpon>KidsListDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\KidsList\Models\KidsListDataModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KidsListDataModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\KidsList\Models\KidsListDataModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KidsListDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\KidsList\Models\KidsListDataModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>KidsListDataModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\KidsList\Models\Person.cs">
+      <DependentUpon>KidsListDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\KidsList\Models\Point.cs">
+      <DependentUpon>KidsListDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\KidsList\Models\Point_Changes.cs">
+      <DependentUpon>KidsListDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\KidsList\Models\Profile_Pic.cs">
+      <DependentUpon>KidsListDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\Santa_Helper\KidController.cs" />
-    <Compile Include="Controllers\Santa_Helper\ParentController.cs" />
-    <Compile Include="Controllers\Santa_Helper\PointController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Account.cs">
-      <DependentUpon>SantaHelperDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Person.cs">
-      <DependentUpon>SantaHelperDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Point.cs">
-      <DependentUpon>SantaHelperDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Point_Changes.cs">
-      <DependentUpon>SantaHelperDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Profile_Pic.cs">
-      <DependentUpon>SantaHelperDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\SantaHelperDataModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SantaHelperDataModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\SantaHelperDataModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SantaHelperDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\SantaHelperDataModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SantaHelperDataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\KidsList\Models\KidsListDataModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>KidsListDataModel.edmx</DependentUpon>
+      <LastGenOutput>KidsListDataModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Areas\KidsList\Models\KidsListDataModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>KidsListDataModel.edmx</DependentUpon>
+      <LastGenOutput>KidsListDataModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Content\background.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -214,24 +228,15 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <EntityDeploy Include="Models\SantaHelperDataModel.edmx">
+    <Content Include="Areas\KidsList\Views\web.config" />
+    <EntityDeploy Include="Areas\KidsList\Models\KidsListDataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>SantaHelperDataModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>KidsListDataModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\SantaHelperDataModel.edmx.diagram">
-      <DependentUpon>SantaHelperDataModel.edmx</DependentUpon>
+    <Content Include="Areas\KidsList\Models\KidsListDataModel.edmx.diagram">
+      <DependentUpon>KidsListDataModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
-    <Content Include="Models\SantaHelperDataModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SantaHelperDataModel.edmx</DependentUpon>
-      <LastGenOutput>SantaHelperDataModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\SantaHelperDataModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>SantaHelperDataModel.edmx</DependentUpon>
-      <LastGenOutput>SantaHelperDataModel.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
@@ -248,7 +253,10 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Views\KidsDemo\Login.html" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -262,12 +270,16 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Areas\KidsList\Views\Shared\_ParentsLayout.cshtml" />
+    <Content Include="Areas\KidsList\Views\Shared\_KidsLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Kid\" />
-    <Folder Include="Views\Parent\" />
-    <Folder Include="Views\Point\" />
+    <Folder Include="Areas\KidsList\Views\Account\" />
+    <Folder Include="Areas\KidsList\Views\Kid\" />
+    <Folder Include="Areas\KidsList\Views\Parent\" />
+    <Folder Include="Areas\KidsList\Views\Point\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="950ca32ffe6e4857a8eff1cf60596a0f" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="KidsListDatabaseModel.Account" Width="1.5" PointX="3.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KidsListDatabaseModel.Person" Width="1.5" PointX="0.875" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="KidsListDatabaseModel.Point_Changes" Width="1.5" PointX="6" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KidsListDatabaseModel.Point" Width="1.5" PointX="4" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="KidsListDatabaseModel.Profile_Pic" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <AssociationConnector Association="KidsListDatabaseModel.FK_People_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="KidsListDatabaseModel.FK_People_Account1" ManuallyRouted="false" />
+        <AssociationConnector Association="KidsListDatabaseModel.FK_Point_Changes_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="KidsListDatabaseModel.FK_People_Profile_Pic" ManuallyRouted="false" />
+        <AssociationConnector Association="KidsListDatabaseModel.FK_Point_Changes_Points" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
