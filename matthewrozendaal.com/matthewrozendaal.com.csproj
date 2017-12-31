@@ -160,6 +160,7 @@
     <Compile Include="Areas\KidsList\Models\Account.cs">
       <DependentUpon>KidsListDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\KidsList\Models\ControllerReturn.cs" />
     <Compile Include="Areas\KidsList\Models\KidsListDataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -187,6 +188,8 @@
     <Compile Include="Areas\KidsList\Models\Profile_Pic.cs">
       <DependentUpon>KidsListDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\KidsList\Services\AccountService.cs" />
+    <Compile Include="Areas\KidsList\Services\UserInputCheck.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
